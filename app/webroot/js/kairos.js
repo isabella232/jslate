@@ -51,8 +51,8 @@ function drawChart(title, subTitle, yAxisTitle, chartType, data, renderTo) {
 		chart: {
 			renderTo: renderTo,
 			type: chartType,
-			marginRight: 130,
-			marginBottom: 50,
+			marginRight: 0,
+			marginBottom: 70,
 			zoomType: 'x'
 		},
 		title: {
@@ -100,11 +100,11 @@ function drawChart(title, subTitle, yAxisTitle, chartType, data, renderTo) {
 			}
 		},
 		legend: {
-			layout: 'vertical',
-			align: 'right',
-			verticalAlign: 'top',
-			x: -10,
-			y: 100,
+			layout: 'horizontal',
+			align: 'center',
+			verticalAlign: 'bottom',
+			x: 0,
+			y: 0,
 			borderWidth: 0
 		},
 		series: data
