@@ -10,9 +10,30 @@ function mapper(n)
 $(function()
 {
 	var viewid = 'kairos_highcharts-area-${widget_id}';
-	var query = '{\"metrics\":[{\"tags\":{},\"name\":\"kairosdb.datastore.write_size\",\"aggregators\":[{\"name\":\"sum\",\"sampling\":{\"value\":\"1\",\"unit\":\"milliseconds\"}}]}],\"cache_time\":500,\"start_relative\":{\"value\":\"1\",\"unit\":\"hours\"}}';
+	var query = {
+  metrics: [
+    {
+      tags: {},
+      name: "kairosdb.datastore.write_size",
+      aggregators: [
+        {
+          name: "sum",
+          sampling: {
+            value: "1",
+            unit: "milliseconds"
+          }
+        }
+      ]
+    }
+  ],
+  cache_time: 300,
+  start_relative: {
+    value: "1",
+    unit: "hours"
+  }
+};
 	
-	$.post('/jslate/proxy.php?url='+kairos_query_url, query, function(response) 
+	$.post('/jslate/proxy.php?url='+kairos_query_url, JSON.stringify(query, null, 0), function(response) 
 	{
 		response = JSON.parse(response);
 	
