@@ -76,7 +76,7 @@ function showAutocomplete(cm)
     function updatePreviewAndSave() {
         code.save();
         $.post("<?php echo $this->Html->url(array('controller'=>'dbviews','action'=>'edit', $this->data['Dbview']['id'])); ?>", $("#DbviewEditForm").serialize());
-        $('#preview').html(code.getValue());
+        $('#preview').html(code.getValue().replace(/\$\{wid\}/g, '1'));
     }
     setTimeout(updatePreviewAndSave, 300);
     
