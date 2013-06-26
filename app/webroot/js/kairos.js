@@ -1,8 +1,9 @@
-var kairos_url = 'http://m0043725.lab.ppops.net:8080';
+//var kairos_url = 'http://m0043725.lab.ppops.net:8080';
+var kairos_url = 'http://10.92.1.61:8080';
 var kairos_query_url = kairos_url+'/api/v1/datapoints/query';
 
 
-function showChartForQuery(title, subtitle, chartType, yAxisTitle, queries, renderTo) {
+function showChartForQuery(title, subtitle, chartType, yAxisTitle, queries, renderTo, chartFragment) {
 	var results = queries[0].results;
 
 	if (results.length == 0) {
@@ -43,11 +44,13 @@ function showChartForQuery(title, subtitle, chartType, yAxisTitle, queries, rend
 			data.push(result);
 		});
 	});
-	drawChart(title, subtitle, yAxisTitle, chartType, data, renderTo);
+	drawChart(title, subtitle, yAxisTitle, chartType, data, renderTo, chartFragment);
 }
 
-function drawChart(title, subTitle, yAxisTitle, chartType, data, renderTo) {
-	chart = new Highcharts.Chart({
+function drawChart(title, subTitle, yAxisTitle, chartType, data, renderTo, chartFragment) {
+    if (typeof(chartFragment) === 'undefined') chartFragment = {};
+    
+    chart = {
 		chart: {
 			renderTo: renderTo,
 			type: chartType,
@@ -108,5 +111,10 @@ function drawChart(title, subTitle, yAxisTitle, chartType, data, renderTo) {
 			borderWidth: 0
 		},
 		series: data
-	});
+	};
+    
+    chart = jQuery.extend(true, chart, chartFragment);
+    
+    //$('#'+renderTo).highcharts(chart);
+	new Highcharts.Chart(chart);
 }
