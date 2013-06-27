@@ -45,7 +45,7 @@
             echo $this->Html->script('d3/d3.layout');
             echo $this->Html->script('d3/d3.time');
             
-            echo $this->Javascript->link('kairos.js');
+            echo $this->Html->script('kairos.js');
 
             echo $scripts_for_layout;
         ?>
