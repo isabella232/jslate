@@ -1,5 +1,5 @@
-//var kairos_url = 'http://m0043725.lab.ppops.net:8080';
-var kairos_url = 'http://10.92.1.61:8080';
+var kairos_url = 'http://m0043725.lab.ppops.net:8080';
+//var kairos_url = 'http://10.92.1.61:8080';
 var kairos_query_url = kairos_url+'/api/v1/datapoints/query';
 
 
@@ -7,7 +7,7 @@ function showChartForQuery(title, subtitle, chartType, yAxisTitle, queries, rend
 	var results = queries[0].results;
 
 	if (results.length == 0) {
-		document.write("No Data");
+        $('#'+renderTo).text('No Data');
 		return;
 	}
 
