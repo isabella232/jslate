@@ -33,7 +33,7 @@ $(function()
   }
 };
 	
-	$.post('/jslate/proxy.php?url='+kairos_query_url, JSON.stringify(query, null, 0), function(response) 
+	$.post(proxy(kairos_query_url), JSON.stringify(query, null, 0), function(response) 
 	{
 		response = JSON.parse(response);
 	
