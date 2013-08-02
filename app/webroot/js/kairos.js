@@ -58,6 +58,9 @@ function drawChart(title, subTitle, yAxisTitle, chartType, data, renderTo, chart
 			marginBottom: 70,
 			zoomType: 'x'
 		},
+	    credits: {
+		    enabled: false
+	    },
 		title: {
 			text: title,
 			startOnTick: true,
