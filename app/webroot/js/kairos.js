@@ -44,7 +44,7 @@ function showChartForQuery(title, subtitle, chartType, yAxisTitle, queries, rend
 			data.push(result);
 		});
 	});
-	drawChart(title, subtitle, yAxisTitle, chartType, data, renderTo, chartFragment);
+	return drawChart(title, subtitle, yAxisTitle, chartType, data, renderTo, chartFragment);
 }
 
 function drawChart(title, subTitle, yAxisTitle, chartType, data, renderTo, chartFragment) {
@@ -116,8 +116,7 @@ function drawChart(title, subTitle, yAxisTitle, chartType, data, renderTo, chart
 		series: data
 	};
     
-    chart = jQuery.extend(true, chart, chartFragment);
+	chart = jQuery.extend(true, chart, chartFragment);
     
-    //$('#'+renderTo).highcharts(chart);
-	new Highcharts.Chart(chart);
+	return new Highcharts.Chart(chart);
 }
