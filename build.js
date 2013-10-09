@@ -52,6 +52,10 @@ function doRPM(rule)
 	
 	//Adding dependencies
 	rpmBuilder.addDependencyMore('httpd', '2');
+	//For lab
+	//rpmBuilder.addDependencyMore('php53', '5.3');
+	//rpmBuilder.addDependencyMore('php53-mysql', '5');
+	//For prod
 	rpmBuilder.addDependencyMore('php', '5.3');
 	rpmBuilder.addDependencyMore('php-mysql', '5');
 	

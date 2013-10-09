@@ -31,7 +31,7 @@ class DashboardsController extends AppController {
             $this->set('dashboard', $dashboard);
 
             $this->set('demo_user', false);
-            if (substr($this->Auth->user()['email'], 0, 14) === 'jSlateDemoUser'){
+            if (substr($this->Auth->user['email'], 0, 14) === 'jSlateDemoUser'){
                 $this->set('demo_user', true);
             }
         } else {
