@@ -3,7 +3,7 @@ var tablesaw = Packages.tablesaw;
 var redline = Packages.org.freecompany.redline;
 
 var project = 'jslate';
-var version = '1.0';
+var version = '1.0.2';
 var release = '1'; //package release number
 var installBase = '/opt/'+project;
 var buildDir = 'build';
@@ -52,8 +52,8 @@ function doRPM(rule)
 	
 	//Adding dependencies
 	rpmBuilder.addDependencyMore('httpd', '2');
-	rpmBuilder.addDependencyMore('php53', '5.3');
-	rpmBuilder.addDependencyMore('php53-mysql', '5');
+	rpmBuilder.addDependencyMore('php', '5.3');
+	rpmBuilder.addDependencyMore('php-mysql', '5');
 	
 	addFileSetToRPM(rpmBuilder, installBase+'/app', new tablesaw.RegExFileSet('app', '.*').recurse());
 	addFileSetToRPM(rpmBuilder, installBase+'/lib', new tablesaw.RegExFileSet('lib', '.*').recurse());
