@@ -47,6 +47,8 @@
             echo $this->Html->script('d3/d3.layout');
             echo $this->Html->script('d3/d3.time');
             
+            echo $this->Html->script('//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js');
+            echo $this->Html->script('ui-bootstrap-tpls-0.6.0.js');
             echo $this->Html->script('kairos.js');
 
             echo $this->fetch('script');

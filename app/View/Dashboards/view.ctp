@@ -9,7 +9,7 @@ $zid=1;
 foreach ($dashboard['Dbview'] as $dbview){
     $zid++;
     $id = $dbview['id'];
-    $wid = 'id_'.uniqid();
+    $wid = 'id_'.$id; //uniqid();
     $code = str_replace('${wid}', $wid, $dbview['code']);
     $style = $user == null ? 'cursor:auto' : '';
     echo "<textarea id='code$id' style='display: none;'>".htmlentities($code)."</textarea>";
@@ -55,7 +55,7 @@ foreach ($dashboard['Dbview'] as $dbview){
                     success: function(msg){
                         $('#view'+id).height((ui.size.height-8)+'px')
                         $('#view'+id).width((ui.size.width)+'px')
-                        $('#view'+id).html($('#code'+id).val())
+                        //$('#view'+id).html($('#code'+id).val())
                     }
                 });
             }
