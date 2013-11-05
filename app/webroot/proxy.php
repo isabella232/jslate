@@ -15,7 +15,7 @@ if(isValidURL($_GET['url'])) {
             'http'=>array(
                 'method'=>"POST",
                 'header'=>$header .
-                    "Content-Type: application/json\r\n",
+                    "Content-Type: ".$_SERVER["CONTENT_TYPE"]."\r\n",
                 'content' => $body
                 )
             );
