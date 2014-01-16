@@ -16,7 +16,8 @@ foreach ($dashboard['Dbview'] as $dbview){
     echo "<div class='well dragbox' id='dragbox_$id' style='z-index: $zid; left: ".$dbview['left']."px; top: ".$dbview['top']."px; width: ".($dbview['width'])."px; height: ".($dbview['height'])."px;'>";
     echo "<div class='header' style='$style'>";
     echo "<span>&nbsp;";
-    if($user != null){
+    //if($user != null){
+    if (!$public){
         echo $this->Html->link('delete', "/dbviews/delete/$id", array('style' =>'float: right; margin-left: 10px;'), 'Are you sure you want to remove this widget?');
         echo $this->Html->link('edit', "/dbviews/edit/$id", array('style' =>'float: right;'));
     }
@@ -26,7 +27,7 @@ foreach ($dashboard['Dbview'] as $dbview){
     echo "</div>";
 }
 ?>
-<?php if($user != null): ?>
+<?php if(!$public): ?>
 <script type='text/javascript'>
     $(function(){
         $(".dragbox").draggable({

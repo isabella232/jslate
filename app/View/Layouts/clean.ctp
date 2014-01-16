@@ -21,7 +21,7 @@
             echo $this->fetch('css');
 
             echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js');
-            echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js');
+            echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js');
             echo $this->Html->script('bootstrap.min');
 
             echo $this->Html->script('codemirror-3.14/codemirror');
