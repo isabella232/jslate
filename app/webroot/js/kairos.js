@@ -1,5 +1,5 @@
 //var kairos_url = 'http://m0043725.lab.ppops.net:8080';
-var kairos_url = 'http://10.92.1.61:8080';
+var kairos_url = 'http://10.92.0.14:8080';
 var kairos_query_url = kairos_url+'/api/v1/datapoints/query';
 
 
