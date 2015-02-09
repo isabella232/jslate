@@ -21,6 +21,12 @@ function showChartForQuery(title, subtitle, chartType, yAxisTitle, queries, rend
 			var groupBy = queryResult.group_by;
 			if (groupBy) {
 				$.each(groupBy, function (index, group) {
+					if (group.name == 'type')
+					{
+						groupType = group.type;
+						return;
+					}
+					
 					groupByMessage += '<br>(' + group.name + ': ';
 
 					var first = true;
