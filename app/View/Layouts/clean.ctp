@@ -36,7 +36,7 @@
             echo $this->Html->script('codemirror-3.14/hint/javascript-hint.js');
             echo $this->Html->script('codemirror-3.14/hint/xml-hint.js');
 
-            echo $this->Html->script('highstock');
+            echo $this->Html->script('highcharts-all');
             echo $this->Html->script('gray');
 
             echo $this->Html->script('d3/d3');
