@@ -26,16 +26,25 @@ class AppController extends Controller {
         ));
     public $helpers = array('Form', 'Html', 'Time', 'Session');
 
-    function beforeFilter(){
-        $this->Auth->redirectUrl("/dashboards/index");
-        $this->Auth->loginAction = "/pages/home";
-        $this->RememberMe->check();
-
-        $this->Security->validatePost = false;
+	    function beforeFilter(){
+	if(!array_key_exists('redirectCounter',$_SERVER)){
+                $_SERVER['redirectCounter'] = 0;
+        }
+        if($_SERVER['redirectCounter'] == 0){
+		$this->request->data['User']['email'] = $_SERVER['AUTHENTICATE_SAMACCOUNTNAME'].'@proofpoint.com';
+	        $password = 'pulse';
+	        $this->request->data['User']['password'] = $password;
+	        $this->Auth->login();
+	        $this->Auth->redirect($this->Auth->redirectUrl);
+		$_SERVER['redirectCounter'] +=1;
+	}
+	$this->Auth->redirectUrl("/dashboards/index");
+	$this->Auth->loginAction = "/pages/home";
+	$this->RememberMe->check();
+	$this->Security->validatePost = false;
         $this->Security->csrfCheck = false;
-        $user = $this->Auth->user();
-
-        $this->set('user', $user);
+	$user = $this->Auth->user();
+	$this->set('user', $user);
         if($user !== null){
             $this->loadModel('Dashboard');
             $this->set('dblist', $this->Dashboard->find('list', array(
