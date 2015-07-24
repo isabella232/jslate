@@ -21,6 +21,7 @@ class DashboardsController extends AppController {
     }
 
     function view($id = null) {
+        $this->set('public', false);
         if (!$id) {
             $this->Session->setFlash(__('Invalid dashboard.'), 'error');
             return $this->redirect('/');
@@ -29,9 +30,41 @@ class DashboardsController extends AppController {
         if (!empty($dashboard) && $dashboard['Dashboard']['user_id'] == $this->Auth->user('id')) {
             $this->set('dashboard_id', $id);
             $this->set('dashboard', $dashboard);
+
+            $this->set('demo_user', false);
+            if (substr($this->Auth->user['email'], 0, 14) === 'jSlateDemoUser'){
+                $this->set('demo_user', true);
+            }
         } else {
             $this->Session->setFlash('Invalid dashboard.', 'error');
             return $this->redirect('/');
+        }
+    }
+    
+    function export($id = null) {
+        $this->layout = '';
+        return $this->view($id);
+    }
+    
+    function import() {
+        if (!empty($this->request->data)) {
+            $upload = $this->request->data['Dashboard']['import'];
+            
+            if (empty($upload['tmp_name'])) {
+                $this->Session->setFlash(__('You must specify a valid jslate export.'), 'error');
+                return;
+            }
+            
+            $json = json_decode(file_get_contents($upload['tmp_name']), true);
+            $json['Dashboard']['user_id'] = $this->Auth->user('id');
+            $json['Dashboard']['public_id'] = Security::hash(openssl_random_pseudo_bytes(40));
+            
+            if ($this->Dashboard->saveAssociated($json)) {
+                return $this->redirect(array('action' => 'view', $this->Dashboard->getLastInsertId()));
+            }
+            else {
+                $this->Session->setFlash(__('You must specify a valid jslate export.'), 'error');
+            }
         }
     }
 
@@ -41,6 +74,7 @@ class DashboardsController extends AppController {
             throw new NotFoundException();
 
         $this->set('dashboard', $dashboard);
+        $this->set('public', true);
         $this->render('view');
     }
 

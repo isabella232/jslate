@@ -17,25 +17,44 @@ class AppController extends Controller {
         'RememberMe',
         'Security',
         'RequestHandler',
-        'Auth' => array(
-            'authenticate' => array(
-                'Form' => array(
-                    'fields' => array('username' => 'email')
-                )
+	'Acl',
+#        'Auth' => array(
+#            'authenticate' => array(
+#                'Form' => array(
+#                    'fields' => array('username' => 'email')
+#                )
+#            )
+#        )
+	'Auth' => array(
+            'authorize' => array(
+                'Actions' => array('actionPath' => 'controllers')
             )
-        ));
+        )
+	);
     public $helpers = array('Form', 'Html', 'Time', 'Session');
 
-    function beforeFilter(){
-        $this->Auth->redirectUrl("/dashboards/index");
-        $this->Auth->loginAction = "/pages/home";
-        $this->RememberMe->check();
+	    function beforeFilter(){
+#	if(!array_key_exists('redirectCounter',$_SERVER)){
+#                $_SERVER['redirectCounter'] = 0;
+#        }
+#        if($_SERVER['redirectCounter'] == 0){
+#        	$this->request->data['User']['email'] = $_SERVER['AUTHENTICATE_SAMACCOUNTNAME'].'@proofpoint.com';
+#	        $password = 'pulse';
+#	        $this->request->data['User']['password'] = $password;
+#	        $this->Auth->login();
+#	        $this->Auth->redirect($this->Auth->redirectUrl);
+#		$_SERVER['redirectCounter'] +=1;
+#	}	
 
-        $this->Security->validatePost = false;
+
+
+	/*$this->Auth->redirectUrl("/dashboards/index");
+	$this->Auth->loginAction = "/pages/home";
+	$this->RememberMe->check();
+	$this->Security->validatePost = false;
         $this->Security->csrfCheck = false;
-        $user = $this->Auth->user();
-
-        $this->set('user', $user);
+	$user = $this->Auth->user();
+	$this->set('user', $user);
         if($user !== null){
             $this->loadModel('Dashboard');
             $this->set('dblist', $this->Dashboard->find('list', array(
@@ -43,6 +62,29 @@ class AppController extends Controller {
                     'user_id' => $this->Auth->user('id')
                 )
             )));
-        }
+        }*/
+
+	$this->Auth->loginAction = array(
+            'plugin' => false, 
+            'controller' => 'users',
+            'action' => 'login'
+            );
+        $this->Auth->logoutRedirect = array(
+            'plugin' => false, 
+            'controller' => 'users',
+            'action' => 'login'
+            );
+        $this->Auth->loginRedirect = '/';
+
+        $this->Auth->authError = __('You are not authorized to access that location.');
+
+        // If YALP not loaded then use Form Auth
+        if (CakePlugin::loaded('YALP'))
+	{
+            	print_r("it loaded");
+		$this->Auth->authenticate = array('YALP.LDAP' => null);
+	}
+
+        parent::beforeFilter();
     }
 }

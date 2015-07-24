@@ -1,3 +1,10 @@
+<?php
+$this->Html->scriptBlock($dashboard['Dashboard']['javascript'], array('inline' => false, 'safe' => false));
+if ($dashboard['Dashboard']['css'] != null) {
+    //If css is null tag() will only print out the start tag
+    $this->Blocks->append('css', $this->Html->tag('style', $dashboard['Dashboard']['css'], array('type' => 'text/css')));
+}
+?>
 <style type="text/css">
     .CodeMirror {
         height: auto;
@@ -11,8 +18,8 @@
 </style>
 <h2>Edit widget</h2>
 <div class="form-inline">
-    <label class="checkbox"><input id="autosave" type="checkbox" checked="checked" onclick="$('#save').toggle();"/> Auto-save</label>
-    <button id="save" class="btn btn-small" style="display: none;" onclick="updatePreviewAndSave()">Save</button>
+    <label class="checkbox"><input id="autosave" type="checkbox" onclick="$('#save').toggle();"/> Auto-save</label>
+    <button id="save" class="btn btn-small" style="" onclick="updatePreviewAndSave()">Save</button>
 </div>
 
 <div class="row">

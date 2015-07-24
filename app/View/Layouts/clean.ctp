@@ -11,14 +11,17 @@
             echo $this->Html->css('bootstrap-responsive.min');
             echo $this->Html->css('darkstrap-v0.9.0');
             echo $this->Html->css('jquery-ui');
-            echo $this->Html->css('style');
 
             echo $this->Html->css('codemirror-3.14/codemirror');
             echo $this->Html->css('codemirror-3.14/ambiance');
             echo $this->Html->css('codemirror-3.14/hint/show-hint');
+            
+            echo $this->Html->css('style');
+            
+            echo $this->fetch('css');
 
-            echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js');
-            echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js');
+            echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
+            echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js');
             echo $this->Html->script('bootstrap.min');
 
             echo $this->Html->script('codemirror-3.14/codemirror');
@@ -26,13 +29,16 @@
             echo $this->Html->script('codemirror-3.14/xml');
             echo $this->Html->script('codemirror-3.14/css');
             echo $this->Html->script('codemirror-3.14/htmlmixed');
+            echo $this->Html->script('codemirror-3.14/matchbrackets');
 
             echo $this->Html->script('codemirror-3.14/hint/show-hint.js');
             echo $this->Html->script('codemirror-3.14/hint/html-hint.js');
             echo $this->Html->script('codemirror-3.14/hint/javascript-hint.js');
             echo $this->Html->script('codemirror-3.14/hint/xml-hint.js');
 
-            echo $this->Html->script('highstock');
+            echo $this->Html->script('highcharts');
+            echo $this->Html->script('highcharts-3d');
+            echo $this->Html->script('highcharts-more');
             echo $this->Html->script('gray');
 
             echo $this->Html->script('d3/d3');
@@ -42,8 +48,10 @@
             echo $this->Html->script('d3/d3.geom');
             echo $this->Html->script('d3/d3.layout');
             echo $this->Html->script('d3/d3.time');
+            
+            echo $this->Html->script('kairos.js');
 
-            echo $scripts_for_layout;
+            echo $this->fetch('script');
         ?>
         <script type="text/javascript">
             $(document).ready(function(){
@@ -54,25 +62,6 @@
             }
 
         </script>
-        <script type="text/javascript">
-          var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-28317188-1']);
-          _gaq.push(['_setDomainName', 'jslate.com']);
-          _gaq.push(['_trackPageview']);
-
-          function ga_heartbeat(){
-              _gaq.push(['_trackEvent', 'Heartbeat', 'Heartbeat', '', 0, true]);
-              setTimeout(ga_heartbeat, 60*1000);
-          }
-          ga_heartbeat();
-
-          (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
-        </script>
-
     </head>
 
     <body>
@@ -89,6 +78,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dashboards <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><?php echo $this->Html->link('Add dashboard', array('controller'=>'dashboards', 'action'=>'add')); ?></li>
+                                <li><?php echo $this->Html->link('Import dashboard', array('controller'=>'dashboards', 'action'=>'import')); ?></li>
                                 <li class="divider"></li>
                                 <?php
                                     foreach ($dblist as $id => $name) {
@@ -104,6 +94,15 @@
                             <li><div><?php echo $this->Html->link('Sign in', '/users/login/', array('class'=>'btn btn-primary', 'escape'=>false)); ?></div></li>
                         <?php elseif(strpos($this->here, 'dashboards/view') !== false): ?>
                             <li><?php echo $this->Html->link('Edit dashboard', '/dashboards/edit/'.$dashboard_id); ?></li>
+                            <?php if (!$demo_user): ?>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $user['email'] ?> <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><?php echo $this->Html->link('Edit', array('controller'=>'users', 'action'=>'edit')); ?></li>
+                                        <li><?php echo $this->Html->link('Logout', '/users/logout/' . $dashboard_id, array('escape'=>false)); ?></li>
+                                    </ul>
+                                </li>
+                            <?php endif; ?>
                             <li class="divider-vertical"></li>
                             <li><div><?php echo $this->Html->link('<i class="icon-plus icon-white"></i> Add widget', '/dbviews/add/' . $dashboard_id, array('class'=>'btn btn-primary', 'escape'=>false)); ?></div></li>
                         <?php endif; ?>
@@ -118,7 +117,7 @@
         </div>
 
         <div class="container" id="content">
-            <?php echo $content_for_layout; ?>
+            <?php echo $this->fetch('content'); ?>
         </div>
     </body>
 </html>

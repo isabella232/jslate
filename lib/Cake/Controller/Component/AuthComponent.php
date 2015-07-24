@@ -542,7 +542,6 @@ class AuthComponent extends Component {
  */
 	public function login($user = null) {
 		$this->_setDefaults();
-
 		if (empty($user)) {
 			$user = $this->identify($this->request, $this->response);
 		}
@@ -728,7 +727,7 @@ class AuthComponent extends Component {
 				throw new CakeException(__d('cake_dev', 'Authentication objects must implement an authenticate method.'));
 			}
 			$settings = array_merge($global, (array)$settings);
-			$this->_authenticateObjects[] = new $className($this->_Collection, $settings);
+			$this->_authenticateObjects[] = new $className($this->_Collection, $settings);	
 		}
 		return $this->_authenticateObjects;
 	}

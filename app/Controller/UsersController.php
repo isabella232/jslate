@@ -13,7 +13,7 @@ class UsersController extends AppController {
 
     function logout() {
         $this->RememberMe->delete();
-        return $this->redirect($this->Auth->logout());
+	return $this->redirect($this->Auth->logout());
     }
 
     function demo(){
@@ -22,9 +22,23 @@ class UsersController extends AppController {
         $this->request->data['User']['password'] = $password;
         $this->request->data['User']['password2'] = $password;
         return $this->add();
+#	$this->request->data['User']['email'] = $_SERVER['AUTHENTICATE_SAMACCOUNTNAME'].'@proofpoint.com';
+#        $password = 'pulse';
+#        $this->request->data['User']['password'] = $password;
+#        $this->request->data['User']['password2'] = $password;
+#        return $this->add();
     }
 
     function login() {
+#	if(!array_key_exists('loginCounter',$_SESSION)){
+#		$_SESSION['loginCounter'] = 0;
+#	}
+#	$_SESSION['loginCounter'] +=1;
+#	if($_SESSION['loginCounter'] == 1){
+#		$this->request->data['User']['email'] = $_SERVER['AUTHENTICATE_SAMACCOUNTNAME'].'@proofpoint.com';
+#		$password = 'pulse';
+#		$this->request->data['User']['password'] = $password;
+#	}
         if (!empty($this->request->data)) {
             if ($this->Auth->login()) {
                 if (empty($this->data['User']['remember_me'])) {
@@ -34,11 +48,10 @@ class UsersController extends AppController {
                 }
                 return $this->redirect($this->Auth->redirectUrl());
             } else {
-                $this->Session->setFlash(__('Invalid username or password, try again.'),'error');
+		$this->Session->setFlash(__('Invalid username or password, try again.'),'error');
             }
         }
     }
-
     function edit() {
         $id = $this->Auth->user('id');
         if(empty($id)) throw new NotFoundException();
